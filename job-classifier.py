@@ -8,7 +8,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from sklearn.metrics import classification_report
 from sklearn.feature_selection import SelectKBest, SelectPercentile, chi2
-from imblearn.over_sampling import RandomOverSampler
+from imblearn.over_sampling import RandomOverSampler, SMOTEN
 import re
 
 def filter_location(location):
@@ -26,12 +26,12 @@ x = data.drop(target, axis=1)
 y = data[target]
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42, stratify=y)
 
-ros = RandomOverSampler(random_state=42, sampling_strategy={
+ros = SMOTEN(random_state=42, sampling_strategy={
   "bereichsleiter": 1000,
   "director_business_unit_leader": 500,
   "specialist": 500,
   "managing_director_small_medium_company": 500,
-})
+}, k_neighbors=2)
 # print("before\n", y_train.value_counts())
 x_train, y_train = ros.fit_resample(x_train, y_train)
 # print("after\n", y_train.value_counts())
