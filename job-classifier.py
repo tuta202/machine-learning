@@ -48,7 +48,7 @@ preprocessor = ColumnTransformer(transformers=[
 
 cls = Pipeline(steps=[
   ("preprocessor", preprocessor),
-  ("feature_selector", SelectPercentile(chi2, percentile=10)),
+  ("feature_selector", SelectKBest(chi2, k=800)),
   ("model", RandomForestClassifier()),
 ])
 
