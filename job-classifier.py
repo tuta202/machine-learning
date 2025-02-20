@@ -57,6 +57,7 @@ cls = Pipeline(steps=[
 # selector = cls.named_steps["feature_selector"]
 # selected_features = feature_names[selector.get_support()]
 # print(selected_features)
+# print(pd.DataFrame(result.todense()))
 
 params = {
   "model__n_estimators": [100, 200, 300],
