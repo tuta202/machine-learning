@@ -1,3 +1,4 @@
+import re
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
@@ -9,7 +10,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.metrics import classification_report
 from sklearn.feature_selection import SelectKBest, SelectPercentile, chi2
 from imblearn.over_sampling import RandomOverSampler, SMOTEN
-import re
+from sklearn.model_selection import GridSearchCV
 
 def filter_location(location):
   match = re.search(r',\s*([A-Z]{2})$', location)
@@ -51,6 +52,16 @@ cls = Pipeline(steps=[
   ("model", RandomForestClassifier()),
 ])
 
-cls.fit(x_train, y_train)
-y_predicted = cls.predict(x_test)
+params = {
+  "model__n_estimators": [100, 200, 300],
+  "model__criterion": ["gini", "entropy", "log_loss"],
+  "model__max_depth": [None, 2, 5],
+}
+
+grid_search = GridSearchCV(estimator=cls, param_grid=params, cv=4, scoring="recall_weighted", verbose=2, n_jobs=-1)
+grid_search.fit(x_train, y_train)
+y_predicted = grid_search.predict(x_test)
+
+# cls.fit(x_train, y_train)
+# y_predicted = cls.predict(x_test)
 print(classification_report(y_test, y_predicted))
