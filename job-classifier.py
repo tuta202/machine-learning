@@ -54,8 +54,7 @@ cls = Pipeline(steps=[
 
 # result = cls.fit_transform(x_train, y_train)
 # result = pd.DataFrame(result.todense(), columns=preprocessor.get_feature_names_out())
-# print(preprocessor.get_feature_names_out())
-# print(list(result.columns))
+# print(list(preprocessor.get_feature_names_out()))
 
 params = {
   "model__n_estimators": [100, 200, 300],
