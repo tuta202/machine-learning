@@ -53,8 +53,10 @@ cls = Pipeline(steps=[
 ])
 
 # result = cls.fit_transform(x_train, y_train)
-# result = pd.DataFrame(result.todense(), columns=preprocessor.get_feature_names_out())
-# print(list(preprocessor.get_feature_names_out()))
+# feature_names = preprocessor.get_feature_names_out()
+# selector = cls.named_steps["feature_selector"]
+# selected_features = feature_names[selector.get_support()]
+# print(selected_features)
 
 params = {
   "model__n_estimators": [100, 200, 300],
