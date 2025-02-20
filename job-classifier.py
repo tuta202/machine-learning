@@ -52,6 +52,11 @@ cls = Pipeline(steps=[
   ("model", RandomForestClassifier()),
 ])
 
+# result = cls.fit_transform(x_train, y_train)
+# print(preprocessor.get_feature_names_out())
+# result = pd.DataFrame(result.todense(), columns=preprocessor.get_feature_names_out())
+# print(result)
+
 params = {
   "model__n_estimators": [100, 200, 300],
   "model__criterion": ["gini", "entropy", "log_loss"],
